@@ -4,6 +4,7 @@
 // **
 
 $(document).ready(function() {	
+
   loadCardsQueue(function() {	  
     scrollCards();
     scrollTweets();
@@ -29,7 +30,7 @@ function createCardElement(card) {
 };
 
 function loadCardsQueue(callback) {
-  $.get('/cards', function(result) {
+  $.get('cards', function(result) {
     for (var i = 0; i < result.length; i++) {
       cardQueue.enqueue(result[i]);
       $('#geeklist').append(createCardElement(result[i]));
@@ -69,13 +70,14 @@ function createTweetElement(tweet) {
 	  </section>');
 };
 
-var socket = io.connect('/');
+var socket = io.connect()//'/socket.io');
 socket.on('tweet', function(tweet) {
 	tweetQueue.enqueue(tweet);
 });
 
 function scrollTweets() {
   var newTweet = tweetQueue.dequeue();
+    console.log('newTweet:'+newTweet)
 
   if (newTweet) {
   	var tweetElement = createTweetElement(newTweet);

@@ -5,7 +5,7 @@ function shuffle(arr) {
 
 exports.index = function(req, res) {
   res.render('index', {      
-	title: 'Node.Philly Live!'
+	title: 'NodeDublin Live!'
   });
 };
 

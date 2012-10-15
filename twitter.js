@@ -11,8 +11,29 @@ exports.init = function(callback) {
 
   var twitStream = new EventEmitter();
 
-  twit.stream('statuses/filter', { track: '@NodePhilly' }, function(stream) {
+/*
+    setTimeout( function(){
+    twit.search('NodeDublin',{},function(err,data){
+	var list = data.results || []
+	list.forEach(function(item){
+	    var tweet = {
+		id: item.id,
+		user: {
+		    avatar: item.profile_image_url,
+		    screen_name: item.from_user
+		},
+		text: item.text
+	    }
+	    console.dir(tweet)
+	    twitStream.emit('tweet', tweet);
+	})
+    })
+    },10000)
+*/
+
+  twit.stream('statuses/filter', { track: '@NodeDublin' }, function(stream) {
     stream.on('data', function(data) {
+
       twitStream.emit('tweet', {
         id: data.id,
         user: {
@@ -24,6 +45,7 @@ exports.init = function(callback) {
     });
 
     stream.on('error', function(data) {
+	data.user = data.user || {}
       twitStream.emit('tweet', {
         id: data.id,
         user: {

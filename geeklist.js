@@ -4,6 +4,8 @@ var fs          = require('fs')
   , im          = require('imagemagick')
   , OAuth       = require('oauth').OAuth;
 
+var baseuser = 'NodeDublin'
+
 exports.init = function(callback) {
 
 	var alldata = {
@@ -24,7 +26,7 @@ exports.init = function(callback) {
 	async.series([
 
 	  function(seriesCallback) {
-        oa.getProtectedResource('http://api.geekli.st/v1/users/NodePhilly/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+        oa.getProtectedResource('http://api.geekli.st/v1/users/'+baseuser+'/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
           if (!error) {
             var result = JSON.parse(data);
 
@@ -40,7 +42,7 @@ exports.init = function(callback) {
             async.whilst(
               function() { console.log(total_followers); console.log(followersRetrieved); return followersRetrieved < total_followers; },
               function(callback) {
-                oa.getProtectedResource('http://api.geekli.st/v1/users/NodePhilly/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+                oa.getProtectedResource('http://api.geekli.st/v1/users/'+baseuser+'/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
                   var pageResult = JSON.parse(data);
 
                   for (var i=0; i<pageResult.data.followers.length; i++) {
