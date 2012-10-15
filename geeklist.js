@@ -62,25 +62,30 @@ exports.init = function(callback) {
 
     function(seriesCallback) {
       async.map(Object.keys(alldata.users), function(user, callback) {
-	oa.getProtectedResource('http://api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
-	  if (!error) {
-	    alldata.users[user] = JSON.parse(data);
+        fs.exists( 'public/img/geeks/' + user + '.jpg', function(exists) {
+          if( !exists ) {
+	    oa.getProtectedResource('http://api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
+	      if (!error) {
+	        alldata.users[user] = JSON.parse(data);
 
-	    request.get(alldata.users[user].data.avatar.large, function(err, response, body) {
-              console.log('got avatar for %s', user);
+	        request.get(alldata.users[user].data.avatar.large, function(err, response, body) {
+                  console.log('got avatar for %s', user);
 
-	      fs.readFile('public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
-	        im.resize({
-	          srcPath: 'public/img/geeks/' + user + '-large.jpg',
-	          dstPath: 'public/img/geeks/' + user + '.jpg',
-	          width: 300
-	        }, callback);
-	      });
-	    }).pipe(fs.createWriteStream('public/img/geeks/' + user + '-large.jpg'));
-	  } else {
-	    callback();
-	  }
-	});
+	          fs.readFile('public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
+	            im.resize({
+	              srcPath: 'public/img/geeks/' + user + '-large.jpg',
+	              dstPath: 'public/img/geeks/' + user + '.jpg',
+	              width: 300
+	            }, callback);
+	          });
+	        }).pipe(fs.createWriteStream('public/img/geeks/' + user + '-large.jpg'));
+	      } else {
+	        callback();
+	      }
+	    });
+          }
+          else callback();
+        })
       }, seriesCallback);
     },
 
