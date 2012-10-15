@@ -103,7 +103,7 @@ function scrollTweets() {
 // ################  SPONSORS
 var sponsorQueue = new Queue();
 
-sponsorQueue.enqueue('nearForm');
+sponsorQueue.enqueue('nearform');
 sponsorQueue.enqueue('azure');
 sponsorQueue.enqueue('joyent');
 sponsorQueue.enqueue('sendgrid');

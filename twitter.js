@@ -11,8 +11,8 @@ exports.init = function(callback) {
 
   var twitStream = new EventEmitter();
 
-/*
-    setTimeout( function(){
+
+  setTimeout( function(){
     twit.search('NodeDublin',{},function(err,data){
 	var list = data.results || []
 	list.forEach(function(item){
@@ -28,8 +28,8 @@ exports.init = function(callback) {
 	    twitStream.emit('tweet', tweet);
 	})
     })
-    },10000)
-*/
+  },10000)
+
 
   twit.stream('statuses/filter', { track: '@NodeDublin' }, function(stream) {
     stream.on('data', function(data) {
