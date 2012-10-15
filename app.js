@@ -30,7 +30,7 @@ cache = {
 async.series([
 
   function(callback) {
-  	geeklist.init(function(data) {
+    geeklist.init(function(data) {
       cache.geeklist = data;
 
       callback();
@@ -49,9 +49,15 @@ async.series([
 
 ], function() {
   //console.log('');
-
-
 });
 
+
+io.sockets.on('connection', function (socket) {
+
+  twitter.foundtweets && twitter.foundtweets.forEach(function(tweet){
+    twitter.twitStream.emit('tweet', tweet);
+  })
+
+});
 
 app.listen(3500);  

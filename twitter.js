@@ -1,6 +1,7 @@
 var twitter = require('ntwitter')
   , EventEmitter = require('events').EventEmitter;
 
+
 exports.init = function(callback) {
   var twit = new twitter({
     consumer_key        : process.env.TWITTER_CONSUMER_KEY,
@@ -9,29 +10,36 @@ exports.init = function(callback) {
     access_token_secret : process.env.TWITTER_ACCESS_TOKEN_SECRET
   });
 
-  var twitStream = new EventEmitter();
+  twitStream = exports.twitStream = new EventEmitter();
+
+  exports.foundtweets = []
 
 
-  setTimeout( function(){
+  function tweetsearch(){
     twit.search('NodeDublin',{},function(err,data){
-	var list = data.results || []
-	list.forEach(function(item){
-	    var tweet = {
-		id: item.id,
-		user: {
-		    avatar: item.profile_image_url,
-		    screen_name: item.from_user
-		},
-		text: item.text
-	    }
-	    console.dir(tweet)
-	    twitStream.emit('tweet', tweet);
-	})
+      var list = data.results || []
+      exports.foundtweets = []
+      list.forEach(function(item){
+	var tweet = {
+	  id: item.id,
+	  user: {
+	    avatar: item.profile_image_url,
+	    screen_name: item.from_user
+	  },
+	  text: item.text
+	}
+	//console.dir(tweet)
+        exports.foundtweets.push(tweet)
+	//twitStream.emit('tweet', tweet);
+      })
+      console.log('foundtweets:'+exports.foundtweets.length)
     })
-  },10000)
+  }
+  tweetsearch()
+  setInterval( tweetsearch, 5*60*1000 )
 
 
-  twit.stream('statuses/filter', { track: '@NodeDublin' }, function(stream) {
+  twit.stream('statuses/filter', { track: 'NodeDublin' }, function(stream) {
     stream.on('data', function(data) {
 
       twitStream.emit('tweet', {
