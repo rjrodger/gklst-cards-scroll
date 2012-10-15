@@ -100,20 +100,36 @@ function scrollTweets() {
 
 // ################  SPONSORS
 var sponsorQueue = new Queue();
+
+sponsorQueue.enqueue('nearForm');
+sponsorQueue.enqueue('azure');
+sponsorQueue.enqueue('joyent');
+sponsorQueue.enqueue('sendgrid');
+sponsorQueue.enqueue('feedhenry');
 sponsorQueue.enqueue('10gen');
-sponsorQueue.enqueue('aca-video');
-sponsorQueue.enqueue('andYet');
-sponsorQueue.enqueue('chatham');
-sponsorQueue.enqueue('comcastlabs');
-sponsorQueue.enqueue('couchbase');
-sponsorQueue.enqueue('energyplus');
-sponsorQueue.enqueue('geeklist');
+sponsorQueue.enqueue('transloadit');
+sponsorQueue.enqueue('cloudfoundry');
+sponsorQueue.enqueue('storify');
+sponsorQueue.enqueue('telefonica');
+sponsorQueue.enqueue('swrve');
 sponsorQueue.enqueue('nodejitsu');
-sponsorQueue.enqueue('saucelabs');
-sponsorQueue.enqueue('uber');
-sponsorQueue.enqueue('voltdb');
-sponsorQueue.enqueue('voxer');
-sponsorQueue.enqueue('zivtech');
+//sponsorQueue.enqueue('logentries');
+//sponsorQueue.enqueue('github');
+sponsorQueue.enqueue('engineyard');
+sponsorQueue.enqueue('mozilla');
+sponsorQueue.enqueue('newbay');
+sponsorQueue.enqueue('basho');
+sponsorQueue.enqueue('newrelic');
+sponsorQueue.enqueue('geeklist');
+
+
+
+
+
+
+
+
+
 
 function rotateSponsors() {  
   var nextSponsor = sponsorQueue.dequeue();
