@@ -9,7 +9,7 @@
     "async": "0.1.x",
     "imagemagick": "0.1.2",
     "request": "2.9.x",
-    "socket.io": "0.9.1-1",
+    "socket.io": "2.5.1",
     "ntwitter": "0.2.10"
   },
   "subdomain": "nodephillylive",
